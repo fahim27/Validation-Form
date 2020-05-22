@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.css">
+    <script
+            src="https://code.jquery.com/jquery-3.5.0.min.js"
+            integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.js"></script>
+
+    <title>Validation Form</title>
+    <style>
+        .mt-10 {
+            margin-top: 150px;
+        }
+
+        .text-black {
+            color: #000000;
+        }
+
+        .full-width {
+            width: 100%;
+        }
+
+        img#sliderDisplay {
+            width: 280px;
+            height: 180px;
+            text-align: center;
+            margin-left: 35px;
+        }
+
+        .text-red {
+            color: red;
+        }
+
+        .display-none {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 mt-10">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-black text-uppercase text-center">Validation form</h4>
+                </div>
+
+                <div class="card-body">
+                    <form enctype="multipart/form-data" id="modalForm">
+
+                        <div class="form-group">
+                            <label class="text-black">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" onkeyup="validation()">
+                            <span class="text-red display-none" id="nameErrorMessage"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-black">Roll</label>
+                            <input type="number" class="form-control" id="roll" name="roll" onkeyup="validation()">
+                            <span class="text-red display-none" id="rollErrorMessage"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="text-black">Class</label>
+                            <select class="form-control" id="class" onchange="validation()">
+                                <option selected disabled>Select class</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                            <span class="text-red display-none" id="classErrorMessage"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="text-black">Section</label><br/>
+                            <label><input type="checkbox" class="checked" onclick="validation()"> A</label><br>
+                            <span class="text-red display-none" id="sectionErrorMessage"></span>
+
+                        </div>
+                        <button type="submit" class="btn btn-primary full-width" id="submitBtn" disabled>Submit</button>
+                    </form>
+
+                </div>
+
+                <div class="card-footer text-right">
+                    <h6 style="font-size: 14px;">Make By :<i>Fahim Muntasir </i></h6>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    function validation() {
+
+        //we are need to every field validation
+        //and when fill up all filed then submit button is disable false
+        //other wise submit button disable is true
+        let name = $("#name").val();
+        let roll = $("#roll").val();
+        let classs = $("#class").val();
+
+        let disable = true;
+
+
+        //name field validation
+        if (name.length == 0 || name == null || name == 'undefined') {
+            $('#nameErrorMessage').show();
+            $('#nameErrorMessage').text('The name field is required');
+        }
+        if (name.length > 0) {
+            disable = false;
+            $('#nameErrorMessage').hide();
+
+        }
+
+
+        //roll field validation
+
+        if (roll.length == 0 || roll == null || roll == 'undefined') {
+            disable = true;
+            $('#rollErrorMessage').show();
+            $('#rollErrorMessage').text('The roll field is required');
+        }
+        if (roll.length > 0) {
+            $('#rollErrorMessage').hide();
+            disable = false;
+
+        }
+
+
+        //class field validation
+        //option box
+
+
+        if (classs == 0 || classs == null || classs == 'undefined') {
+            disable = true;
+            $('#classErrorMessage').show();
+            $('#classErrorMessage').text('The class field is required');
+        }
+        if (classs > 0 || classs != null) {
+            console.log(classs)
+            $('#classErrorMessage').hide();
+            disable = false;
+
+        }
+
+
+        //section field validation
+        //check box
+        if ($(".checked").is(':checked')) {
+            $('#sectionErrorMessage').hide();
+            disable = false;
+        }
+        if ($(".checked").is(":not(:checked)")) {
+            $('#sectionErrorMessage').show();
+            $('#sectionErrorMessage').text('The section field is required');
+            disable = true;
+        }
+
+
+        //if all validation data
+        if (name.length > 0 && roll.length > 0 && classs != null && $(".checked").is(':checked') && disable == false) {
+            $("#submitBtn").attr('disabled', false)
+        } else {
+            $("#submitBtn").attr('disabled', true)
+        }
+
+
+    }
+</script>
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+</html>
